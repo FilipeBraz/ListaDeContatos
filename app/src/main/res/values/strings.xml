@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Lista</string>
     <string name="iv_photo_content_description">Photo</string>
+    
+    <string name="menu_1">Menu 1</string>
+    <string name="menu_2">Menu 2</string>
+
 </resources>

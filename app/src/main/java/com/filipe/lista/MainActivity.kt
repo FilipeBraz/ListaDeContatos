@@ -2,7 +2,12 @@ package com.filipe.lista
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Message
 import android.text.style.UpdateLayout
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.filipe.lista.ContactAdapter
@@ -32,8 +37,35 @@ class MainActivity : AppCompatActivity() {
                     "Filipe Braz",
                     "(35) 9 8709-5554",
                     "img.png"
+                ),
+                Contact(
+                    "Filipe Braz",
+                    "(35) 9 8709-5554",
+                    "img.png"
                 )
             )
         )
+    }
+
+    private fun showToast(message: String){
+        Toast.makeText(this,message,Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when {item.itemId}{
+            R.id.item_menu_1 -> {
+
+        }
+            R.id.item_menu_2 -> {
+
+        }
+            else -> super.onOptionsItemSelecter(item)
+        }
     }
 }
