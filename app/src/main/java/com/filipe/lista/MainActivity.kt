@@ -23,6 +23,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         bindViews()
+        updateList()
 
     }
 
@@ -58,14 +59,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when {item.itemId}{
+        return when (item.itemId){
             R.id.item_menu_1 -> {
-
+            showToast("Exibindo Item de menu 1")
+            true
         }
             R.id.item_menu_2 -> {
-
+                showToast("Exibindo Item de menu 2")
+                true
         }
-            else -> super.onOptionsItemSelecter(item)
+            else -> super.onOptionsItemSelected(item)
         }
     }
 }
