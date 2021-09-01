@@ -1,9 +1,12 @@
 package com.filipe.lista
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Message
+import android.provider.Settings.Global.putString
 import android.text.style.UpdateLayout
 import android.view.Menu
 import android.view.MenuInflater
@@ -12,11 +15,14 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.edit
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.filipe.lista.ContactAdapter
 import com.filipe.lista.DetailActivity.Companion.EXTRA_CONTACT
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 class MainActivity : AppCompatActivity(), ClickItemContactListener {
     private val rvList: RecyclerView by lazy {
@@ -29,9 +35,30 @@ class MainActivity : AppCompatActivity(), ClickItemContactListener {
         setContentView(R.layout.drawer_menu)
 
         initDrawer()
+        fetchListContact()
         bindViews()
-        updateList()
+    }
 
+    private fun fetchListContact(){
+        val list = arrayListOf(
+            Contact(
+                "Filipe Braz",
+                "(35) 9 8709-5554",
+                "img.png"
+            ),
+            Contact(
+                "Igor Kast",
+                "(35) 9 8155-5894",
+                "img.png"
+            )
+        )
+        getInstanceSharedPreferences().edit {
+            putString("contactos", Gson().toJson(list))
+        }
+    }
+
+    private fun getInstanceSharedPreferences(): SharedPreferences{
+        return getSharedPreferences("com.filipe.lista.PREFERENCES", Context.MODE_PRIVATE)
     }
 
     private fun initDrawer(){
@@ -48,22 +75,15 @@ class MainActivity : AppCompatActivity(), ClickItemContactListener {
     private fun bindViews(){
         rvList.adapter = adapter
         rvList.layoutManager = LinearLayoutManager(this)
+        updateList()
+    }
+    private fun getListContacts(): List<Contact>{
+        val list = getInstanceSharedPreferences().getString("contacts", "[]")
+        val turnsType = object : TypeToken<List<Contact>>() {}.type
+        return Gson().fromJson(list, turnsType)
     }
     private fun updateList() {
-        adapter.updateList(
-            arrayListOf(
-                Contact(
-                    "Filipe Braz",
-                    "(35) 9 8709-5554",
-                    "img.png"
-                ),
-                Contact(
-                    "Igor Kast",
-                    "(35) 9 8155-5894",
-                    "img.png"
-                )
-            )
-        )
+        adapter.updateList(getListContacts())
     }
 
     private fun showToast(message: String){
