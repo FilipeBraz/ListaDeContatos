@@ -16,6 +16,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.filipe.lista.ContactAdapter
+import com.filipe.lista.DetailActivity.Companion.EXTRA_CONTACT
 
 class MainActivity : AppCompatActivity(), ClickItemContactListener {
     private val rvList: RecyclerView by lazy {
@@ -35,6 +36,7 @@ class MainActivity : AppCompatActivity(), ClickItemContactListener {
 
     private fun initDrawer(){
         val drawerLayout = findViewById<View>(R.id.drawer_layout) as DrawerLayout
+
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
 
@@ -56,8 +58,8 @@ class MainActivity : AppCompatActivity(), ClickItemContactListener {
                     "img.png"
                 ),
                 Contact(
-                    "Filipe Braz",
-                    "(35) 9 8709-5554",
+                    "Igor Kast",
+                    "(35) 9 8155-5894",
                     "img.png"
                 )
             )
@@ -90,6 +92,7 @@ class MainActivity : AppCompatActivity(), ClickItemContactListener {
 
     override fun clickItemContact(contact: Contact) {
         val intent = Intent(this, DetailActivity::class.java)
+        intent.putExtra(EXTRA_CONTACT, contact)
         startActivity(intent)
     }
 }
